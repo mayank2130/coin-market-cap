@@ -400,44 +400,85 @@ const index = () => {
                     <h3 className="text-sm font-semibold text-gray-500 mb-2">
                       Centralized Exchanges
                     </h3>
-                    <a
-                      href="#"
-                      className="flex items-center gap-2 text-white hover:text-[#3861fb] font-semibold"
-                    >
-                      <div className="bg-blue-600 rounded-full p-1">
-                        <BarChart2 size={18} className="text-white" />
-                      </div>
-                      <span>Spot</span>
-                    </a>
-                    <div
-                      className="flex items-center gap-2 text-white hover:text-[#3861fb] font-semibold"
-                    >
-                      <div className="bg-orange-500 rounded-full p-1">
-                        <ListFilter size={18} className="text-white" />
-                      </div>
-                      <span>Derivatives</span>
+                    <div className="flex flex-col gap-2">
+                      {[
+                        {
+                          icon: "https://s2.coinmarketcap.com/static/cloud/img/menu/MenuSpotIcon.svg",
+                          color: "bg-blue-500",
+                          text: "Spot",
+                          href: "",
+                        },
+                        {
+                          icon: "https://s2.coinmarketcap.com/static/cloud/img/menu/MenuDerivativesIcon.svg",
+                          color: "bg-orange-500",
+                          text: "Derivatives",
+                          href: "",
+                        },
+                      ].map((item, index) => {
+                        const Component = item.href ? "a" : "div";
+                        return (
+                          <Component
+                            key={index}
+                            href={item.href}
+                              className="flex px-3 items-center gap-3 text-white hover:bg-[#323546] p-1 rounded-lg font-semibold"
+                          >
+                            <div className={` rounded-full p-1`}>
+                              <Image
+                                src={item.icon}
+                                alt={item.text}
+                                width={32}
+                                height={32}
+                                className="text-white"
+                              />
+                            </div>
+                            <span className="text-sm font-semibold">
+                              {item.text}
+                            </span>
+                          </Component>
+                        );
+                      })}
                     </div>
                     <h3 className="text-sm font-semibold text-gray-500 mb-2 mt-5">
                       Decentralized Exchanges
                     </h3>
-                    <a
-                      href="#"
-                      className="flex items-center gap-2 text-white hover:text-[#3861fb] font-semibold"
-                    >
-                      <div className="bg-blue-600 rounded-full p-1">
-                        <BarChart2 size={18} className="text-white" />
-                      </div>
-                      <span>Spot</span>
-                    </a>
-                    <a
-                      href="#"
-                      className="flex items-center gap-2 text-white hover:text-[#3861fb] font-semibold"
-                    >
-                      <div className="bg-orange-500 rounded-full p-1">
-                        <ListFilter size={18} className="text-white" />
-                      </div>
-                      <span>Derivatives</span>
-                    </a>
+                    <div className="flex flex-col gap-2">
+                      {[
+                        {
+                          icon: "https://s2.coinmarketcap.com/static/cloud/img/menu/MenuDexSpotIcon.svg",
+                          color: "bg-blue-500",
+                          text: "Spot",
+                          href: "",
+                        },
+                        {
+                          icon: "https://s2.coinmarketcap.com/static/cloud/img/menu/MenuDexDerivativesIcon.svg",
+                          color: "bg-orange-500",
+                          text: "Derivatives",
+                          href: "",
+                        },
+                      ].map((item, index) => {
+                        const Component = item.href ? "a" : "div";
+                        return (
+                          <Component
+                            key={index}
+                            href={item.href}
+                            className="flex px-3 items-center gap-3 text-white hover:bg-[#323546] p-1 rounded-lg font-semibold"
+                          >
+                            <div className={` rounded-full p-1`}>
+                              <Image
+                                src={item.icon}
+                                alt={item.text}
+                                width={32}
+                                height={32}
+                                className="text-white"
+                              />
+                            </div>
+                            <span className="text-sm font-semibold">
+                              {item.text}
+                            </span>
+                          </Component>
+                        );
+                      })}
+                    </div>
                   </div>
                 </TooltipContent>
               </Tooltip>
