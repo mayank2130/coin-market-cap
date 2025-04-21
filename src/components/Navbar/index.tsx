@@ -78,13 +78,13 @@ const index = () => {
                             href: "",
                           },
                           {
-                            icon:"https://s2.coinmarketcap.com/static/cloud/img/menu/MenuTokenUnlocksIconV2.svg",
+                            icon: "https://s2.coinmarketcap.com/static/cloud/img/menu/MenuTokenUnlocksIconV2.svg",
                             color: "bg-green-500",
                             text: "Token unlocks",
                             href: "",
                           },
                           {
-                            icon:"https://s2.coinmarketcap.com/static/cloud/img/menu/MenuYieldIconV2.svg",
+                            icon: "https://s2.coinmarketcap.com/static/cloud/img/menu/MenuYieldIconV2.svg",
                             color: "bg-blue-500",
                             text: "Yield",
                             href: "",
@@ -171,7 +171,7 @@ const index = () => {
                               href={item.href}
                               className="flex px-3.5 items-center gap-4 text-white hover:bg-[#323546] p-3 rounded-lg font-semibold"
                             >
-                               <div className={` rounded-full p-1`}>
+                              <div className={` rounded-full p-1`}>
                                 <Image
                                   src={item.icon}
                                   alt={item.text}
@@ -196,37 +196,37 @@ const index = () => {
                       <div className="">
                         {[
                           {
-                            icon: BarChart2,
+                            icon: "https://s2.coinmarketcap.com/static/cloud/img/menu/MenuMarketOverviewIcon.svg",
                             color: "bg-purple-500",
                             text: "Market Overview",
                             href: "",
                           },
                           {
-                            icon: BarChart2,
+                            icon: "https://s2.coinmarketcap.com/static/cloud/img/menu/MenuCMC100Icon.svg",
                             color: "bg-blue-500",
                             text: "CoinMarketCap 100 Index",
                             href: "",
                           },
                           {
-                            icon: BarChart2,
+                            icon: "https://s2.coinmarketcap.com/static/cloud/img/menu/MenuFearGreedIndexIcon.svg",
                             color: "bg-red-500",
                             text: "Fear and Greed Index",
                             href: "",
                           },
                           {
-                            icon: BarChart2,
+                            icon: "https://s2.coinmarketcap.com/static/cloud/img/menu/MenuAltcoinIndexIcon.svg",
                             color: "bg-blue-500",
                             text: "Altcoin Season Index",
                             href: "",
                           },
                           {
-                            icon: BarChart2,
+                            icon: "https://s2.coinmarketcap.com/static/cloud/img/menu/MenuBitcoinDominance.svg",
                             color: "bg-orange-500",
                             text: "Bitcoin Dominance",
                             href: "",
                           },
                           {
-                            icon: BarChart2,
+                            icon: "https://s2.coinmarketcap.com/static/cloud/img/menu/MenuBitcoinETFsIconV3.svg",
                             color: "bg-purple-500",
                             text: "Crypto ETFs",
                             href: "",
@@ -239,8 +239,14 @@ const index = () => {
                               href={item.href}
                               className="flex px-3.5 items-center gap-4 text-white hover:bg-[#323546] p-3 rounded-lg font-semibold"
                             >
-                              <div className={`${item.color} rounded-full p-1`}>
-                                <item.icon size={20} className="text-white" />
+                              <div className={` rounded-full p-1`}>
+                                <Image
+                                  src={item.icon}
+                                  alt={item.text}
+                                  width={32}
+                                  height={32}
+                                  className="text-white"
+                                />
                               </div>
                               <span className="text-sm font-semibold">
                                 {item.text}
@@ -258,13 +264,13 @@ const index = () => {
                       <div className="">
                         {[
                           {
-                            icon: BarChart2,
+                            icon: "https://s2.coinmarketcap.com/static/cloud/img/menu/MenuNFTOverviewV3.svg",
                             color: "bg-blue-500",
                             text: "Overall NFT Stats",
                             href: "",
                           },
                           {
-                            icon: BarChart2,
+                            icon: "https://s2.coinmarketcap.com/static/cloud/img/menu/MenuUpcomingSales.svg",
                             color: "bg-green-500",
                             text: "Upcoming Sales",
                             href: "",
@@ -277,8 +283,14 @@ const index = () => {
                               href={item.href}
                               className="flex px-3.5 items-center gap-4 text-white hover:bg-[#323546] p-3 rounded-lg font-semibold"
                             >
-                              <div className={`${item.color} rounded-full p-1`}>
-                                <item.icon size={20} className="text-white" />
+                              <div className={` rounded-full p-1`}>
+                                <Image
+                                  src={item.icon}
+                                  alt={item.text}
+                                  width={32}
+                                  height={32}
+                                  className="text-white"
+                                />
                               </div>
                               <span className="text-sm font-semibold">
                                 {item.text}
@@ -309,37 +321,37 @@ const index = () => {
                   <div className="flex flex-col p-3.5">
                     {[
                       {
-                        icon: BarChart2,
+                        icon: "https://s2.coinmarketcap.com/static/cloud/img/menu/DexScanNewPairs.svg",
                         color: "bg-blue-500",
                         text: "New Pairs",
                         href: "",
                       },
                       {
-                        icon: BarChart2,
+                        icon: "https://s2.coinmarketcap.com/static/cloud/img/menu/DexScanTrendingPairs.svg",
                         color: "bg-blue-500",
                         text: "Trending Pairs",
                         href: "",
                       },
                       {
-                        icon: BarChart2,
+                        icon: "https://s2.coinmarketcap.com/static/cloud/img/menu/DexScanMemeExplorer.svg",
                         color: "bg-blue-500",
                         text: "Meme Explorer",
                         href: "",
                       },
                       {
-                        icon: BarChart2,
+                        icon: "https://s2.coinmarketcap.com/static/cloud/img/menu/DexScanGainersAndLosers.svg",
                         color: "bg-green-500",
                         text: "Gainers & Losers",
                         href: "",
                       },
                       {
-                        icon: BarChart2,
+                        icon: "https://s2.coinmarketcap.com/static/cloud/img/menu/DexScanCommunityVotes.svg",
                         color: "bg-blue-500",
                         text: "Community Votes",
                         href: "",
                       },
                       {
-                        icon: BarChart2,
+                        icon: "https://s2.coinmarketcap.com/static/cloud/img/menu/DexScanTopTraders.svg",
                         color: "bg-blue-500",
                         text: "Top Traders",
                         href: "",
@@ -350,10 +362,16 @@ const index = () => {
                         <Component
                           key={index}
                           href={item.href}
-                          className="flex px-3.5 items-center gap-4 text-white hover:bg-[#323546] p-3 rounded-lg font-semibold"
+                          className="flex px-3.5 items-center gap-3 text-white hover:bg-[#323546] p-2 rounded-lg font-semibold"
                         >
-                          <div className={`${item.color} rounded-full p-1`}>
-                            <item.icon size={20} className="text-white" />
+                          <div className={` rounded-full p-1`}>
+                            <Image
+                              src={item.icon}
+                              alt={item.text}
+                              width={32}
+                              height={32}
+                              className="text-white"
+                            />
                           </div>
                           <span className="text-sm font-semibold">
                             {item.text}
@@ -374,11 +392,34 @@ const index = () => {
                 </TooltipTrigger>
                 <TooltipContent
                   side="bottom"
-                  align="start"
+                  align="center"
                   sideOffset={20}
-                  className="w-64 bg-[#171924] border-0 rounded-lg p-0 shadow-xl animate-in duration-300"
+                  className="w-full max-w-3xl bg-[#222531] border-0 rounded-lg p-4 shadow-sm animate-in duration-300 shadow-black"
                 >
-                  <div className="p-4 space-y-3">
+                  <div className="flex flex-col p-3.5">
+                    <h3 className="text-sm font-semibold text-gray-500 mb-2">
+                      Centralized Exchanges
+                    </h3>
+                    <a
+                      href="#"
+                      className="flex items-center gap-2 text-white hover:text-[#3861fb] font-semibold"
+                    >
+                      <div className="bg-blue-600 rounded-full p-1">
+                        <BarChart2 size={18} className="text-white" />
+                      </div>
+                      <span>Spot</span>
+                    </a>
+                    <div
+                      className="flex items-center gap-2 text-white hover:text-[#3861fb] font-semibold"
+                    >
+                      <div className="bg-orange-500 rounded-full p-1">
+                        <ListFilter size={18} className="text-white" />
+                      </div>
+                      <span>Derivatives</span>
+                    </div>
+                    <h3 className="text-sm font-semibold text-gray-500 mb-2 mt-5">
+                      Decentralized Exchanges
+                    </h3>
                     <a
                       href="#"
                       className="flex items-center gap-2 text-white hover:text-[#3861fb] font-semibold"
@@ -396,15 +437,6 @@ const index = () => {
                         <ListFilter size={18} className="text-white" />
                       </div>
                       <span>Derivatives</span>
-                    </a>
-                    <a
-                      href="#"
-                      className="flex items-center gap-2 text-white hover:text-[#3861fb] font-semibold"
-                    >
-                      <div className="bg-purple-500 rounded-full p-1">
-                        <TrendingUp size={18} className="text-white" />
-                      </div>
-                      <span>DEX</span>
                     </a>
                   </div>
                 </TooltipContent>
