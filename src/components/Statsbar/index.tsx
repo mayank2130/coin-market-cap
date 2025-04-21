@@ -1,5 +1,11 @@
 import React from "react";
 import { ChevronDown, Fuel, Triangle } from "lucide-react";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 const index = () => {
   return (
@@ -57,11 +63,27 @@ const index = () => {
         ))}
         <div className="flex-grow"></div>
         <div className="flex items-center gap-2">
-          <button className="bg-[#222531] text-xs font-semibold px-3 py-1.5 rounded-md flex flex-row items-center gap-1">
-            <span className="py-0.5">Get listed</span>
-            <ChevronDown className="w-4 h-4 text-gray-500" />
-          </button>
-          <button className=" border border-[#222531] bg-[#222531] text-xs font-semibold px-3 py-1.5 rounded-md">
+          <DropdownMenu>
+            <DropdownMenuTrigger className="bg-[#323546] text-xs font-semibold px-3 py-1.5 rounded-md flex flex-row items-center gap-1">
+              <span className="py-0.5">Get listed</span>
+              <ChevronDown className="w-4 h-4 text-gray-500" />
+            </DropdownMenuTrigger>
+            <DropdownMenuContent
+              align="start"
+              className="bg-[#222531] text-white text-xs font-semibold border-[#323546] shadow-md shadow-black"
+            >
+              <DropdownMenuItem className="focus:bg-[#323546] focus:text-white cursor-pointer text-xs py-2.5 m-1.5">
+                Cryptocurrency
+              </DropdownMenuItem>
+              <DropdownMenuItem className="focus:bg-[#323546] focus:text-white cursor-pointer text-xs py-2.5 m-1.5">
+                Exchange
+              </DropdownMenuItem>
+              <DropdownMenuItem className="focus:bg-[#323546] focus:text-white cursor-pointer text-xs py-2.5 m-1.5">
+                Page Updates
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+          <button className=" border border-[#323546] bg-[#323546] text-xs font-semibold px-3 py-1.5 rounded-md">
             <span className="py-0.5">API</span>
           </button>
         </div>

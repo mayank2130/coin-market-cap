@@ -3,10 +3,22 @@
 import { useState, useEffect } from 'react';
 import { LineChart, Line, ResponsiveContainer } from 'recharts';
 
-export default function MarketCapDisplay() {
+interface MarketGraphProps {
+  color?: string;
+  dataSet?: {value: number}[];
+  height?: string;
+}
+
+export default function MarketGraph({ color = "#16c784", dataSet, height = "340%" }: MarketGraphProps) {
   const [data, setData] = useState<{value: number}[]>([]);
   
   useEffect(() => {
+    // If dataSet is provided, use it, otherwise generate data
+    if (dataSet) {
+      setData(dataSet);
+      return;
+    }
+    
     // Generate sample data with more realistic market fluctuations
     const generateData = () => {
       const points = 100;
@@ -51,22 +63,22 @@ export default function MarketCapDisplay() {
     };
     
     setData(generateData());
-  }, []);
+  }, [dataSet]);
   
   return (
-        <div className="h-10 pb-4">
-          <ResponsiveContainer width="100%" height="340%">
-            <LineChart data={data}>
-              <Line 
-                type="monotone" 
-                dataKey="value" 
-                stroke="#16c784" 
-                strokeWidth={2}
-                dot={false}
-                isAnimationActive={false}
-              />
-            </LineChart>
-          </ResponsiveContainer>
-        </div>
+    <div className="h-10 pb-4">
+      <ResponsiveContainer width="100%" height={height}>
+        <LineChart data={data}>
+          <Line 
+            type="monotone" 
+            dataKey="value" 
+            stroke={color} 
+            strokeWidth={2}
+            dot={false}
+            isAnimationActive={false}
+          />
+        </LineChart>
+      </ResponsiveContainer>
+    </div>
   );
 }

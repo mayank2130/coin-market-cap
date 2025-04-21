@@ -1,12 +1,13 @@
+"use client";
+
+import React, { useState, useEffect } from "react";
 import Navbar from "@/components/Navbar";
 import Statsbar from "@/components/Statsbar";
 import {
-  BarChart,
   Boxes,
   ChartNoAxesColumn,
   ChevronDown,
   ChevronRight,
-  Columns,
   Columns3,
   Eye,
   Filter,
@@ -33,8 +34,316 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import {
+  Pagination,
+  PaginationContent,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+} from "@/components/ui/pagination";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 export default function Home() {
+  const [showCount, setShowCount] = useState<number | 'all'>(10);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [watchlistIds, setWatchlistIds] = useState<number[]>([]);
+  
+  // Load watchlist IDs from localStorage on component mount
+  useEffect(() => {
+    const savedWatchlist = localStorage.getItem('crypto-watchlist');
+    if (savedWatchlist) {
+      const watchlistItems = JSON.parse(savedWatchlist);
+      setWatchlistIds(watchlistItems.map((item: any) => item.id));
+    }
+  }, []);
+
+  // Function to toggle watchlist item
+  const toggleWatchlist = (coin: any) => {
+    let updatedWatchlist = [];
+    const savedWatchlist = localStorage.getItem('crypto-watchlist');
+    
+    if (savedWatchlist) {
+      updatedWatchlist = JSON.parse(savedWatchlist);
+    }
+    
+    // Check if coin is already in watchlist
+    const coinIndex = updatedWatchlist.findIndex((item: any) => item.id === coin.id);
+    
+    if (coinIndex === -1) {
+      // Add to watchlist
+      updatedWatchlist.push(coin);
+      setWatchlistIds([...watchlistIds, coin.id]);
+    } else {
+      // Remove from watchlist
+      updatedWatchlist.splice(coinIndex, 1);
+      setWatchlistIds(watchlistIds.filter(id => id !== coin.id));
+    }
+    
+    localStorage.setItem('crypto-watchlist', JSON.stringify(updatedWatchlist));
+  };
+
+  // Full list of cryptocurrencies data
+  const allCryptos = [
+    {
+      id: 1,
+      name: "Bitcoin",
+      symbol: "BTC",
+      price: "$85,157.27",
+      hr1: "-0.07%",
+      hr24: "+0.67%",
+      d7: "+0.10%",
+      marketCap: "$1,690,675,937,737",
+      volume: "$15,308,609,521",
+      volumeCrypto: "179.81K BTC",
+      circulatingSupply: "19.85M BTC",
+      image:
+        "https://s2.coinmarketcap.com/static/img/coins/64x64/1.png",
+      sparkline: "positive",
+      buy: true,
+    },
+    {
+      id: 2,
+      name: "Ethereum",
+      symbol: "ETH",
+      price: "$1,617.19",
+      hr1: "-0.21%",
+      hr24: "+1.47%",
+      d7: "-1.78%",
+      marketCap: "$195,201,049,604",
+      volume: "$7,308,324,106",
+      volumeCrypto: "4.52M ETH",
+      circulatingSupply: "120.7M ETH",
+      image:
+        "https://s2.coinmarketcap.com/static/img/coins/64x64/1027.png",
+      sparkline: "negative",
+      buy: true,
+    },
+    {
+      id: 3,
+      name: "Tether",
+      symbol: "USDT",
+      price: "$0.9998",
+      hr1: "+0.07%",
+      hr24: "+0.00%",
+      d7: "-0.00%",
+      marketCap: "$144,622,635,837",
+      volume: "$34,525,644,907",
+      volumeCrypto: "34.53B USDT",
+      circulatingSupply: "144.64B USDT",
+      image:
+        "https://s2.coinmarketcap.com/static/img/coins/64x64/825.png",
+      sparkline: "neutral",
+      buy: true,
+    },
+    {
+      id: 4,
+      name: "XRP",
+      symbol: "XRP",
+      price: "$2.08",
+      hr1: "+0.18%",
+      hr24: "+0.27%",
+      d7: "-2.52%",
+      marketCap: "$121,955,092,243",
+      volume: "$1,539,671,391",
+      volumeCrypto: "736.96M XRP",
+      circulatingSupply: "58.39B XRP",
+      image:
+        "https://s2.coinmarketcap.com/static/img/coins/64x64/52.png",
+      sparkline: "negative",
+      buy: true,
+    },
+    {
+      id: 5,
+      name: "BNB",
+      symbol: "BNB",
+      price: "$590.80",
+      hr1: "+0.20%",
+      hr24: "-0.71%",
+      d7: "-1.06%",
+      marketCap: "$83,238,757,008",
+      volume: "$1,253,682,658",
+      volumeCrypto: "2.12M BNB",
+      circulatingSupply: "140.89M BNB",
+      image:
+        "https://s2.coinmarketcap.com/static/img/coins/64x64/1839.png",
+      sparkline: "negative",
+      buy: true,
+    },
+    {
+      id: 6,
+      name: "Solana",
+      symbol: "SOL",
+      price: "$138.55",
+      hr1: "+0.03%",
+      hr24: "+3.39%",
+      d7: "+5.54%",
+      marketCap: "$71,576,377,441",
+      volume: "$2,520,159,962",
+      volumeCrypto: "18.17M SOL",
+      circulatingSupply: "516.59M SOL",
+      image:
+        "https://s2.coinmarketcap.com/static/img/coins/64x64/5426.png",
+      sparkline: "positive",
+      buy: true,
+    },
+    {
+      id: 7,
+      name: "USDC",
+      symbol: "USDC",
+      price: "$0.9999",
+      hr1: "+0.01%",
+      hr24: "-0.00%",
+      d7: "+0.02%",
+      marketCap: "$60,899,183,859",
+      volume: "$4,050,717,333",
+      volumeCrypto: "4.05B USDC",
+      circulatingSupply: "60.9B USDC",
+      image:
+        "https://s2.coinmarketcap.com/static/img/coins/64x64/3408.png",
+      sparkline: "neutral",
+      buy: true,
+    },
+    {
+      id: 8,
+      name: "Dogecoin",
+      symbol: "DOGE",
+      price: "$0.1552",
+      hr1: "-0.38%",
+      hr24: "-1.67%",
+      d7: "-6.68%",
+      marketCap: "$23,128,178,953",
+      volume: "$480,915,447",
+      volumeCrypto: "3.06B DOGE",
+      circulatingSupply: "148.92B DOGE",
+      image:
+        "https://s2.coinmarketcap.com/static/img/coins/64x64/74.png",
+      sparkline: "negative",
+      buy: true,
+    },
+    {
+      id: 9,
+      name: "TRON",
+      symbol: "TRX",
+      price: "$0.2444",
+      hr1: "+0.34%",
+      hr24: "+1.10%",
+      d7: "-0.62%",
+      marketCap: "$23,210,237,256",
+      volume: "$373,058,239",
+      volumeCrypto: "1.54B TRX",
+      circulatingSupply: "94.94B TRX",
+      image:
+        "https://s2.coinmarketcap.com/static/img/coins/64x64/1958.png",
+      sparkline: "neutral",
+      buy: true,
+    },
+    {
+      id: 10,
+      name: "Cardano",
+      symbol: "ADA",
+      price: "$0.6202",
+      hr1: "-0.35%",
+      hr24: "-1.12%",
+      d7: "-5.16%",
+      marketCap: "$21,889,517,662",
+      volume: "$338,687,301",
+      volumeCrypto: "542.02M ADA",
+      circulatingSupply: "35.29B ADA",
+      image:
+        "https://s2.coinmarketcap.com/static/img/coins/64x64/2010.png",
+      sparkline: "negative",
+      buy: true,
+    },
+    {
+      id: 11,
+      name: "UNUS SED LEO",
+      symbol: "LEO",
+      price: "$9.33",
+      hr1: "+0.14%",
+      hr24: "-0.27%",
+      d7: "-0.91%",
+      marketCap: "$8,620,002,430",
+      volume: "$1,566,982",
+      volumeCrypto: "167.85K LEO",
+      circulatingSupply: "923.65M LEO",
+      image:
+        "https://s2.coinmarketcap.com/static/img/coins/64x64/3957.png",
+      sparkline: "negative",
+      buy: true,
+    },
+    {
+      id: 12,
+      name: "Chainlink",
+      symbol: "LINK",
+      price: "$13.08",
+      hr1: "+0.03%",
+      hr24: "+2.25%",
+      d7: "+0.31%",
+      marketCap: "$8,598,458,945",
+      volume: "$179,963,568",
+      volumeCrypto: "13.77M LINK",
+      circulatingSupply: "657.09M LINK",
+      image:
+        "https://s2.coinmarketcap.com/static/img/coins/64x64/1975.png",
+      sparkline: "positive",
+      buy: true,
+    },
+    {
+      id: 13,
+      name: "Avalanche",
+      symbol: "AVAX",
+      price: "$19.60",
+      hr1: "-0.24%",
+      hr24: "+0.44%",
+      d7: "-2.50%",
+      marketCap: "$8,158,656,230",
+      volume: "$174,755,352",
+      volumeCrypto: "8.90M AVAX",
+      circulatingSupply: "416.04M AVAX",
+      image:
+        "https://s2.coinmarketcap.com/static/img/coins/64x64/5805.png",
+      sparkline: "negative",
+      buy: true,
+    },
+    {
+      id: 14,
+      name: "Stellar",
+      symbol: "XLM",
+      price: "$0.2430",
+      hr1: "-0.26%",
+      hr24: "-1.33%",
+      d7: "-2.36%",
+      marketCap: "$7,492,238,292",
+      volume: "$69,737,737",
+      volumeCrypto: "284.67M XLM",
+      circulatingSupply: "30.82B XLM",
+      image:
+        "https://s2.coinmarketcap.com/static/img/coins/64x64/512.png",
+      sparkline: "positive",
+      buy: true,
+    },
+  ];
+  
+  // Logic to paginate the data
+  const totalPages = showCount === 'all' ? 1 : Math.ceil(allCryptos.length / (showCount as number));
+  const displayedCryptos = showCount === 'all' 
+    ? allCryptos 
+    : allCryptos.slice(
+        (currentPage - 1) * (showCount as number), 
+        currentPage * (showCount as number)
+      );
+  
+  // Function to handle page change
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
+  };
+
   return (
     <div className="min-h-screen bg-[#0d1421] text-white">
       {/* Header */}
@@ -44,7 +353,7 @@ export default function Home() {
       {/* Main content */}
       <main className="mx-auto px-4 py-6">
         <span className="text-[25px] font-bold mb-2 leading-[140%] font-[arial]">
-          Today's Cryptocurrency Prices by Market Cap
+          Today&apos;s Cryptocurrency Prices by Market Cap
         </span>
         <p className="text-sm text-gray-400 font-semibold2 mb-7 mt-2">
           The global crypto market cap is{" "}
@@ -361,7 +670,7 @@ export default function Home() {
                   />
                 </div>
                 <div className="text-sm">
-                  Will China's Bitcoin Sales Sink Prices Further?
+                  Will China&apos;s Bitcoin Sales Sink Prices Further?
                 </div>
               </div>
             </div>
@@ -417,14 +726,17 @@ export default function Home() {
                 {
                   label: "Top",
                   icon: <ChartNoAxesColumn className="w-4 h-4 text-blue-500" />,
+                  active: true
                 },
                 {
                   label: "Categories",
                   icon: <Flame className="w-4 h-4 text-orange-500" />,
+                  active: false
                 },
                 {
                   label: "New",
                   icon: <Sprout className="w-4 h-4 text-purple-500" />,
+                  active: false
                 },
                 {
                   label: "Gainers",
@@ -448,15 +760,21 @@ export default function Home() {
                       />
                     </svg>
                   ),
+                  active: false
                 },
                 {
                   label: "Most Visited",
                   icon: <Eye className="w-4 h-4 text-cyan-500" />,
+                  active: false
                 },
               ].map((item, index) => (
                 <button
                   key={index}
-                  className="text-sm cursor-pointer text-gray-400 hover:text-white hover:bg-[#222531] rounded-md px-3 py-2 flex items-center gap-1"
+                  className={`text-sm cursor-pointer ${
+                    item.active 
+                      ? "bg-[#1E274F] text-white" 
+                      : "text-gray-400 hover:text-white hover:bg-[#222531]"
+                  } rounded-md px-3 py-2 flex items-center gap-1`}
                 >
                   {item.icon}
                   <span className="text-xs">{item.label}</span>
@@ -473,10 +791,34 @@ export default function Home() {
               <Columns3 className="w-3.5 h-3.5 text-gray-400" />
               Columns
             </button>
-            <button className="text-xs font-bold bg-[#323546] hover:border hover:border-gray-400 text-white px-3.5 py-2 rounded-md flex items-center gap-1 cursor-pointer">
-              Show 100
-              <ChevronDown className="w-3.5 h-3.5 text-gray-400" />
-            </button>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <button className="text-xs font-bold bg-[#323546] hover:border hover:border-gray-400 text-white px-3.5 py-2 rounded-md flex items-center gap-1 cursor-pointer">
+                  {showCount === 'all' ? 'Show All' : `Show ${showCount}`}
+                  <ChevronDown className="w-3.5 h-3.5 text-gray-400" />
+                </button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent className="bg-[#323546] border-0 shadow-xl text-white min-w-0">
+                <DropdownMenuItem 
+                  className="px-4 py-2 text-xs hover:bg-[#3861fb] hover:text-white cursor-pointer"
+                  onClick={() => {
+                    setShowCount(10);
+                    setCurrentPage(1);
+                  }}
+                >
+                  Show 10
+                </DropdownMenuItem>
+                <DropdownMenuItem 
+                  className="px-4 py-2 text-xs hover:bg-[#3861fb] hover:text-white cursor-pointer"
+                  onClick={() => {
+                    setShowCount('all');
+                    setCurrentPage(1);
+                  }}
+                >
+                  Show All
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
           </div>
         </div>
 
@@ -567,252 +909,22 @@ export default function Home() {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {[
-                {
-                  id: 1,
-                  name: "Bitcoin",
-                  symbol: "BTC",
-                  price: "$85,157.27",
-                  hr1: "-0.07%",
-                  hr24: "+0.67%",
-                  d7: "+0.10%",
-                  marketCap: "$1,690,675,937,737",
-                  volume: "$15,308,609,521",
-                  volumeCrypto: "179.81K BTC",
-                  circulatingSupply: "19.85M BTC",
-                  image:
-                    "https://s2.coinmarketcap.com/static/img/coins/64x64/1.png",
-                  sparkline: "positive",
-                  buy: true,
-                },
-                {
-                  id: 2,
-                  name: "Ethereum",
-                  symbol: "ETH",
-                  price: "$1,617.19",
-                  hr1: "-0.21%",
-                  hr24: "+1.47%",
-                  d7: "-1.78%",
-                  marketCap: "$195,201,049,604",
-                  volume: "$7,308,324,106",
-                  volumeCrypto: "4.52M ETH",
-                  circulatingSupply: "120.7M ETH",
-                  image:
-                    "https://s2.coinmarketcap.com/static/img/coins/64x64/1027.png",
-                  sparkline: "negative",
-                  buy: true,
-                },
-                {
-                  id: 3,
-                  name: "Tether",
-                  symbol: "USDT",
-                  price: "$0.9998",
-                  hr1: "+0.07%",
-                  hr24: "+0.00%",
-                  d7: "-0.00%",
-                  marketCap: "$144,622,635,837",
-                  volume: "$34,525,644,907",
-                  volumeCrypto: "34.53B USDT",
-                  circulatingSupply: "144.64B USDT",
-                  image:
-                    "https://s2.coinmarketcap.com/static/img/coins/64x64/825.png",
-                  sparkline: "neutral",
-                  buy: true,
-                },
-                {
-                  id: 4,
-                  name: "XRP",
-                  symbol: "XRP",
-                  price: "$2.08",
-                  hr1: "+0.18%",
-                  hr24: "+0.27%",
-                  d7: "-2.52%",
-                  marketCap: "$121,955,092,243",
-                  volume: "$1,539,671,391",
-                  volumeCrypto: "736.96M XRP",
-                  circulatingSupply: "58.39B XRP",
-                  image:
-                    "https://s2.coinmarketcap.com/static/img/coins/64x64/52.png",
-                  sparkline: "negative",
-                  buy: true,
-                },
-                {
-                  id: 5,
-                  name: "BNB",
-                  symbol: "BNB",
-                  price: "$590.80",
-                  hr1: "+0.20%",
-                  hr24: "-0.71%",
-                  d7: "-1.06%",
-                  marketCap: "$83,238,757,008",
-                  volume: "$1,253,682,658",
-                  volumeCrypto: "2.12M BNB",
-                  circulatingSupply: "140.89M BNB",
-                  image:
-                    "https://s2.coinmarketcap.com/static/img/coins/64x64/1839.png",
-                  sparkline: "negative",
-                  buy: true,
-                },
-                {
-                  id: 6,
-                  name: "Solana",
-                  symbol: "SOL",
-                  price: "$138.55",
-                  hr1: "+0.03%",
-                  hr24: "+3.39%",
-                  d7: "+5.54%",
-                  marketCap: "$71,576,377,441",
-                  volume: "$2,520,159,962",
-                  volumeCrypto: "18.17M SOL",
-                  circulatingSupply: "516.59M SOL",
-                  image:
-                    "https://s2.coinmarketcap.com/static/img/coins/64x64/5426.png",
-                  sparkline: "positive",
-                  buy: true,
-                },
-                {
-                  id: 7,
-                  name: "USDC",
-                  symbol: "USDC",
-                  price: "$0.9999",
-                  hr1: "+0.01%",
-                  hr24: "-0.00%",
-                  d7: "+0.02%",
-                  marketCap: "$60,899,183,859",
-                  volume: "$4,050,717,333",
-                  volumeCrypto: "4.05B USDC",
-                  circulatingSupply: "60.9B USDC",
-                  image:
-                    "https://s2.coinmarketcap.com/static/img/coins/64x64/3408.png",
-                  sparkline: "neutral",
-                  buy: true,
-                },
-                {
-                  id: 8,
-                  name: "Dogecoin",
-                  symbol: "DOGE",
-                  price: "$0.1552",
-                  hr1: "-0.38%",
-                  hr24: "-1.67%",
-                  d7: "-6.68%",
-                  marketCap: "$23,128,178,953",
-                  volume: "$480,915,447",
-                  volumeCrypto: "3.06B DOGE",
-                  circulatingSupply: "148.92B DOGE",
-                  image:
-                    "https://s2.coinmarketcap.com/static/img/coins/64x64/74.png",
-                  sparkline: "negative",
-                  buy: true,
-                },
-                {
-                  id: 9,
-                  name: "TRON",
-                  symbol: "TRX",
-                  price: "$0.2444",
-                  hr1: "+0.34%",
-                  hr24: "+1.10%",
-                  d7: "-0.62%",
-                  marketCap: "$23,210,237,256",
-                  volume: "$373,058,239",
-                  volumeCrypto: "1.54B TRX",
-                  circulatingSupply: "94.94B TRX",
-                  image:
-                    "https://s2.coinmarketcap.com/static/img/coins/64x64/1958.png",
-                  sparkline: "neutral",
-                  buy: true,
-                },
-                {
-                  id: 10,
-                  name: "Cardano",
-                  symbol: "ADA",
-                  price: "$0.6202",
-                  hr1: "-0.35%",
-                  hr24: "-1.12%",
-                  d7: "-5.16%",
-                  marketCap: "$21,889,517,662",
-                  volume: "$338,687,301",
-                  volumeCrypto: "542.02M ADA",
-                  circulatingSupply: "35.29B ADA",
-                  image:
-                    "https://s2.coinmarketcap.com/static/img/coins/64x64/2010.png",
-                  sparkline: "negative",
-                  buy: true,
-                },
-                {
-                  id: 11,
-                  name: "UNUS SED LEO",
-                  symbol: "LEO",
-                  price: "$9.33",
-                  hr1: "+0.14%",
-                  hr24: "-0.27%",
-                  d7: "-0.91%",
-                  marketCap: "$8,620,002,430",
-                  volume: "$1,566,982",
-                  volumeCrypto: "167.85K LEO",
-                  circulatingSupply: "923.65M LEO",
-                  image:
-                    "https://s2.coinmarketcap.com/static/img/coins/64x64/3957.png",
-                  sparkline: "negative",
-                  buy: true,
-                },
-                {
-                  id: 12,
-                  name: "Chainlink",
-                  symbol: "LINK",
-                  price: "$13.08",
-                  hr1: "+0.03%",
-                  hr24: "+2.25%",
-                  d7: "+0.31%",
-                  marketCap: "$8,598,458,945",
-                  volume: "$179,963,568",
-                  volumeCrypto: "13.77M LINK",
-                  circulatingSupply: "657.09M LINK",
-                  image:
-                    "https://s2.coinmarketcap.com/static/img/coins/64x64/1975.png",
-                  sparkline: "positive",
-                  buy: true,
-                },
-                {
-                  id: 13,
-                  name: "Avalanche",
-                  symbol: "AVAX",
-                  price: "$19.60",
-                  hr1: "-0.24%",
-                  hr24: "+0.44%",
-                  d7: "-2.50%",
-                  marketCap: "$8,158,656,230",
-                  volume: "$174,755,352",
-                  volumeCrypto: "8.90M AVAX",
-                  circulatingSupply: "416.04M AVAX",
-                  image:
-                    "https://s2.coinmarketcap.com/static/img/coins/64x64/5805.png",
-                  sparkline: "negative",
-                  buy: true,
-                },
-                {
-                  id: 14,
-                  name: "Stellar",
-                  symbol: "XLM",
-                  price: "$0.2430",
-                  hr1: "-0.26%",
-                  hr24: "-1.33%",
-                  d7: "-2.36%",
-                  marketCap: "$7,492,238,292",
-                  volume: "$69,737,737",
-                  volumeCrypto: "284.67M XLM",
-                  circulatingSupply: "30.82B XLM",
-                  image:
-                    "https://s2.coinmarketcap.com/static/img/coins/64x64/512.png",
-                  sparkline: "positive",
-                  buy: true,
-                },
-              ].map((coin) => (
+              {displayedCryptos.map((coin) => (
                 <TableRow
                   key={coin.id}
                   className="border-b border-gray-700 hover:bg-[#222531] cursor-pointer"
                 >
                   <TableCell className="py-[33px] px-3.5 text-center whitespace-nowrap">
-                    <Star className="w-3 h-3 text-gray-400" strokeWidth={2.5} />
+                    <Star 
+                      className={`w-3 h-3 ${watchlistIds.includes(coin.id) ? 'text-yellow-400' : 'text-gray-400'}`} 
+                      fill={watchlistIds.includes(coin.id) ? "#EAB308" : "none"} 
+                      strokeWidth={2.5} 
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        toggleWatchlist(coin);
+                      }}
+                      style={{ cursor: 'pointer' }}
+                    />
                   </TableCell>
                   <TableCell className="py-4 px-3 text-center whitespace-nowrap">
                     <div className="flex items-center justify-center">
@@ -988,6 +1100,54 @@ export default function Home() {
               ))}
             </TableBody>
           </Table>
+          
+          {totalPages > 1 && (
+            <div className="mt-6 mb-8">
+              <Pagination className="text-white">
+                <PaginationContent>
+                  <PaginationItem>
+                    <PaginationPrevious 
+                      href="#" 
+                      onClick={(e) => {
+                        e.preventDefault();
+                        if (currentPage > 1) handlePageChange(currentPage - 1);
+                      }}
+                      className="hover:bg-gray-700 text-white hover:text-white"
+                    />
+                  </PaginationItem>
+                  
+                  {Array.from({ length: totalPages }).map((_, i) => (
+                    <PaginationItem key={i}>
+                      <PaginationLink 
+                        href="#" 
+                        isActive={currentPage === i + 1}
+                        onClick={(e) => {
+                          e.preventDefault();
+                          handlePageChange(i + 1);
+                        }}
+                        className={currentPage === i + 1 
+                          ? "bg-[#3861FB] text-white hover:bg-[#3861FB] hover:text-white border-none" 
+                          : "hover:bg-gray-700 text-white hover:text-white border-none"}
+                      >
+                        {i + 1}
+                      </PaginationLink>
+                    </PaginationItem>
+                  ))}
+                  
+                  <PaginationItem>
+                    <PaginationNext 
+                      href="#" 
+                      onClick={(e) => {
+                        e.preventDefault();
+                        if (currentPage < totalPages) handlePageChange(currentPage + 1);
+                      }}
+                      className="hover:bg-gray-700 text-white hover:text-white"
+                    />
+                  </PaginationItem>
+                </PaginationContent>
+              </Pagination>
+            </div>
+          )}
         </div>
       </main>
     </div>

@@ -2,18 +2,11 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 
-const inter = Inter({
-  subsets: ["latin"],
-});
+const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title:
-    "Cryptocurrency Prices, Charts, and Market Capitalizations | CoinMarketCap",
-  description:
-    "The global cryptocurrency market cap today is $2.69 Trillion, a 0.9% change in the last 24 hours.",
-  icons: {
-    icon: "/favicon.ico",
-  },
+  title: "CoinMarketCap Clone",
+  description: "A clone of CoinMarketCap built with Next.js",
 };
 
 export default function RootLayout({
@@ -23,9 +16,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${inter.className} antialiased`}>
-        {children}
-      </body>
+      <body className={inter.className}>{children}</body>
     </html>
   );
 }
