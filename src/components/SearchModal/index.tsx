@@ -146,7 +146,7 @@ const CryptoSearchModal = ({ isOpen, onClose }: CryptoModalProps) => {
                   key={index}
                   className="flex items-center bg-[#2B2E3D] rounded-full px-3 py-1 text-white"
                 >
-                  <div className="w-5 h-5 bg-gray-400 rounded-full mr-2"></div>
+                  <img src="https://s2.coinmarketcap.com/static/img/coins/64x64/35336.png" alt="BTC" className="w-5 h-5 rounded-full mr-2" />
                   <span>{search}</span>
                 </div>
               ))}
