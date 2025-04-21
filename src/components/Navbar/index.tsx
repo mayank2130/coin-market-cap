@@ -541,15 +541,15 @@ const index = () => {
                           href={item.href}
                           className="flex px-3 items-center gap-3 text-white hover:bg-[#323546] p-1 rounded-lg font-semibold"
                         >
-                          <div className={`${item.color} rounded-full p-1`}>
-                            <Image
-                              src={item.icon}
-                              alt={item.text}
-                              width={32}
-                              height={32}
-                              className="text-white"
-                            />
-                          </div>
+             <div className={` rounded-full p-1`}>
+                                <Image
+                                  src={item.icon}
+                                  alt={item.text}
+                                  width={32}
+                                  height={32}
+                                  className="text-white"
+                                />
+                              </div>
                           <span className="text-sm font-semibold">
                             {item.text}
                           </span>
